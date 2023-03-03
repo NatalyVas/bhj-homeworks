@@ -5,11 +5,13 @@ let timeClickPrev = 0;
 
 function countCookie() {
 	document.getElementById(`clicker__counter`).textContent = Math.floor(document.getElementById(`clicker__counter`).textContent) + 1;
-	if (cookie.width === 200) {
-		cookie.width = 250;
-	} else {
-		cookie.width = 200;
-	}
+	// if (cookie.width === 200) {
+	// 	cookie.width = 250;
+	// } else {
+	// 	cookie.width = 200;
+	// }
+
+	cookie.width = cookie.width === 200 ? 250 : 200;
 
 	timeClick = Date.now() / 1000;
 
