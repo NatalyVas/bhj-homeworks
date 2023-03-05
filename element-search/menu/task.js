@@ -15,7 +15,7 @@ for (let i = 0; i < menus.length; i++) {
 			function menuClick() {
 				const parent = menu[j].closest(`li`);
 				const openUl = parent.querySelector(`ul`);
-				if (openUl != null) {
+				if (openUl != null && !openUl.classList.contains(`menu_active`)) {
 					openUl.classList.add(`menu_active`);
 
 					for (let x = 0; x < ulAll.length; x++) {
@@ -23,8 +23,11 @@ for (let i = 0; i < menus.length; i++) {
 							ulAll[x].classList.remove(`menu_active`);
 						}
 					}
-					return false;
+					
+				} else {
+					openUl.classList.remove(`menu_active`);
 				}
-			}	
+				return false;
+			} 
 		}
 }

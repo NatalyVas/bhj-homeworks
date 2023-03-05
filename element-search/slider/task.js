@@ -13,43 +13,65 @@ sliderDots[0].classList.add(`slider__dot_active`);
 leftArrow.item(0).onclick = leftArrowClick;
 rightArrow.item(0).onclick = rightArrowClick;
 
-function leftArrowClick() {
-	sliderItems[index].classList.remove(`slider__item_active`);
-	sliderDots[index].classList.remove(`slider__dot_active`);
-	if (index - 1 >= 0) {
-		sliderItems[index - 1].classList.add(`slider__item_active`);
-		sliderDots[index - 1].classList.add(`slider__dot_active`);
-		index = index - 1;	
-	} else {
-		index = sliderItems.length - 1;
-		sliderItems[index].classList.add(`slider__item_active`);
-		sliderDots[index].classList.add(`slider__dot_active`);
+
+function getSlide(num) {
+	let ind;
+	for (let i = 0; i < sliderItems.length; i++) {
+		if (sliderItems[i].classList.contains(`slider__item_active`)) {
+			ind = i;
+			break;
+		}
 	}
+
+	//let ind = sliderItems.findIndex(item => item.classList.contains(`slider__item_active`));
+	sliderItems[ind].classList.remove(`slider__item_active`);
+	sliderDots[ind].classList.remove(`slider__dot_active`);
+	let numCopy = num;
+
+	if (numCopy < 0 ) {
+		numCopy = sliderItems.length - 1
+	} else {
+		if (numCopy > sliderItems.length - 1) {
+			numCopy = 0;
+		}
+	}
+
+	//numCopy < 0 ? numCopy = sliderItems.length - 1 : numCopy > (sliderItems.length - 1) ? numCopy = 0;
+	sliderItems[numCopy].classList.add(`slider__item_active`);
+	sliderDots[numCopy].classList.add(`slider__dot_active`);
+}
+
+function leftArrowClick() {
+	let ind;
+	for (let i = 0; i < sliderItems.length; i++) {
+		if (sliderItems[i].classList.contains(`slider__item_active`)) {
+			ind = i;
+			break;
+		}
+	}
+	//let ind = sliderItems.findIndex(item => item.classList.contains(`slider__item_active`));
+
+	getSlide(ind - 1);
 }
 
 function rightArrowClick() {
-	sliderItems[index].classList.remove(`slider__item_active`);
-	sliderDots[index].classList.remove(`slider__dot_active`);
-	if (index + 1 <= sliderItems.length - 1) {
-		sliderItems[index + 1].classList.add(`slider__item_active`);
-		sliderDots[index + 1].classList.add(`slider__dot_active`);
-		index = index + 1;	
-	} else {
-		index = 0;
-		sliderItems[index].classList.add(`slider__item_active`);
-		sliderDots[index].classList.add(`slider__dot_active`);
+	let ind;
+	for (let i = 0; i < sliderItems.length; i++) {
+		if (sliderItems[i].classList.contains(`slider__item_active`)) {
+			ind = i;
+			break;
+		}
 	}
+	//let ind = sliderItems.findIndex(item => item.classList.contains(`slider__item_active`));
+
+	getSlide(ind + 1);
 }
 
 for (let i = 0; i < sliderDots.length; i++) {
 	sliderDots[i].onclick = clickDots;
+	
 	function clickDots() {
-		sliderDots[index].classList.remove(`slider__dot_active`);
-		sliderDots[i].classList.add(`slider__dot_active`);
-
-		sliderItems[index].classList.remove(`slider__item_active`);
-		sliderItems[i].classList.add(`slider__item_active`);
-		index = i;
+		getSlide(i);
 	}
 }
 
