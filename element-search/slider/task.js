@@ -1,11 +1,11 @@
 const leftArrow = document.getElementsByClassName(`slider__arrow_prev`);
 const rightArrow = document.getElementsByClassName(`slider__arrow_next`);
 
-const sliderItems = document.querySelectorAll(`.slider__item`);
-Array.from(sliderItems);
+const sliderItem = document.querySelectorAll(`.slider__item`);
+const sliderItems = Array.from(sliderItem);
 
-const sliderDots = document.querySelectorAll(`.slider__dot`);
-Array.from(sliderDots);
+const sliderDot = document.querySelectorAll(`.slider__dot`);
+const sliderDots = Array.from(sliderDot);
 
 let index = 0;
 sliderDots[0].classList.add(`slider__dot_active`);
@@ -15,15 +15,8 @@ rightArrow.item(0).onclick = rightArrowClick;
 
 
 function getSlide(num) {
-	let ind;
-	for (let i = 0; i < sliderItems.length; i++) {
-		if (sliderItems[i].classList.contains(`slider__item_active`)) {
-			ind = i;
-			break;
-		}
-	}
 
-	//let ind = sliderItems.findIndex(item => item.classList.contains(`slider__item_active`));
+	let ind = sliderItems.findIndex(item => item.classList.contains(`slider__item_active`));
 	sliderItems[ind].classList.remove(`slider__item_active`);
 	sliderDots[ind].classList.remove(`slider__dot_active`);
 	let numCopy = num;
@@ -37,32 +30,19 @@ function getSlide(num) {
 	}
 
 	//numCopy < 0 ? numCopy = sliderItems.length - 1 : numCopy > (sliderItems.length - 1) ? numCopy = 0;
+	
 	sliderItems[numCopy].classList.add(`slider__item_active`);
 	sliderDots[numCopy].classList.add(`slider__dot_active`);
 }
 
 function leftArrowClick() {
-	let ind;
-	for (let i = 0; i < sliderItems.length; i++) {
-		if (sliderItems[i].classList.contains(`slider__item_active`)) {
-			ind = i;
-			break;
-		}
-	}
-	//let ind = sliderItems.findIndex(item => item.classList.contains(`slider__item_active`));
+	let ind = sliderItems.findIndex(item => item.classList.contains(`slider__item_active`));
 
 	getSlide(ind - 1);
 }
 
 function rightArrowClick() {
-	let ind;
-	for (let i = 0; i < sliderItems.length; i++) {
-		if (sliderItems[i].classList.contains(`slider__item_active`)) {
-			ind = i;
-			break;
-		}
-	}
-	//let ind = sliderItems.findIndex(item => item.classList.contains(`slider__item_active`));
+	let ind = sliderItems.findIndex(item => item.classList.contains(`slider__item_active`));
 
 	getSlide(ind + 1);
 }
