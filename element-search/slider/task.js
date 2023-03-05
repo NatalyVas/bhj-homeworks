@@ -23,13 +23,12 @@ function getSlide(num) {
 
 	if (numCopy < 0 ) {
 		numCopy = sliderItems.length - 1
-	} else {
-		if (numCopy > sliderItems.length - 1) {
+	} else if (numCopy > sliderItems.length - 1) {
 			numCopy = 0;
-		}
-	}
+		 }
 
-	//numCopy < 0 ? numCopy = sliderItems.length - 1 : numCopy > (sliderItems.length - 1) ? numCopy = 0;
+	//numCopy < 0 ? numCopy = Array.from(sliderItems).length - 1: numCopy > Array.from(sliderItems).length - 1 ? numCopy = 0;
+	//numCopy < 0 ? numCopy = sliderItems.length - 1 : numCopy > sliderItems.length - 1 ? numCopy = 0;
 	
 	sliderItems[numCopy].classList.add(`slider__item_active`);
 	sliderDots[numCopy].classList.add(`slider__dot_active`);
@@ -54,4 +53,3 @@ for (let i = 0; i < sliderDots.length; i++) {
 		getSlide(i);
 	}
 }
-
