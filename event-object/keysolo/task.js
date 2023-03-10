@@ -5,6 +5,7 @@ class Game {
     this.winsElement = container.querySelector('.status__wins');
     this.lossElement = container.querySelector('.status__loss');
 
+    this.wordNow;
     this.reset();
 
     this.registerEvents();
@@ -25,6 +26,33 @@ class Game {
       При неправильном вводе символа - this.fail();
       DOM-элемент текущего символа находится в свойстве this.currentSymbol.
      */
+
+    /* 
+    Пыталась получить текущее слово, но this.wordNow выводится верно с консоль
+    а когда присваиваю this.wordNow в переменную, там оказывается случайное слово
+    Почему?
+    
+    console.log(Array.from(this.wordNow));
+    const wordN = Array.from(this.wordNow);
+    let wordWritten = [];
+
+      document.addEventListener(`keydown`, enter);
+      function enter(event) {
+          wordWritten.push(event.key);
+      }
+      wordN === wordWritten ? this.success() : this.fail();
+    */
+
+    /*
+    Как связать сравнение символа со сравнением всего слова?
+    чтобы выводить success или fail 
+    */
+
+    const currentSym = this.currentSymbol.textContent;
+    document.addEventListener(`keydown`, enter);
+    function enter(event) {
+      currentSym === event.key ? game.success() : game.fail();
+    }
   }
 
   success() {
@@ -56,6 +84,7 @@ class Game {
     const word = this.getWord();
 
     this.renderWord(word);
+    this.wordNow = word;
   }
 
   getWord() {
@@ -73,6 +102,7 @@ class Game {
         'javascript'
       ],
       index = Math.floor(Math.random() * words.length);
+      //this.wordNow = words[index];
 
     return words[index];
   }
@@ -90,5 +120,5 @@ class Game {
   }
 }
 
-new Game(document.getElementById('game'))
+const game = new Game(document.getElementById('game'))
 
