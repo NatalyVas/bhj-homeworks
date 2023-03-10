@@ -49,10 +49,10 @@ class Game {
     */
 
     const currentSym = this.currentSymbol.textContent;
-    document.addEventListener(`keydown`, enter);
-    function enter(event) {
-      currentSym === event.key ? game.success() : game.fail();
-    }
+    document.addEventListener(`keydown`, (event) => currentSym === event.key ? this.success() : this.fail());
+    // function enter(event) {
+    //   currentSym === event.key ? game.success() : game.fail();
+    // }
   }
 
   success() {
