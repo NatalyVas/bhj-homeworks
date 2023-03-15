@@ -28,6 +28,29 @@ for (let i = 0; i < aSizes.length; i++) {
 
 		return false;
 	}
+
+	/*
+	ниже объединенная функция, которую надо запускать на событии, 
+	но я не знаю как передать туда параметры. Записать ее в переменную и поставить на onclick??
+	И еще раз addEventListener не работает, не срабатывает return false 
+	*/
+
+	function change(arr, classActive, dataAtr, bookClassArray, dataAttrArray) {
+		let indArrray = bookClassArray[0].split(/\_|\-|\//);
+
+		let index = arr.findIndex(item => item.classList.contains(classActive));
+		arr[index].classList.remove(classActive);
+
+		arr[i].classList.add(classActive);
+
+		const attr = arr.getAttribute(dataAtr);
+		for (let i = 0; i < bookClassAr.length; i++) {
+			book.classList.remove(bookClassAr[i]);
+		}
+		if (attr != null) book.classList.add(`book_` + ${indArrray[1]} + `-` + `attr`); 
+
+		return false;
+	}
 	
  	// function change() {
 		

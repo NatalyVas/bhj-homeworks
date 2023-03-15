@@ -7,7 +7,7 @@ function checkBlock() {
 	for (let i = 0; i < blocks.length; i++) {
 		if (visible(blocks[i])) {
 			blocks[i].classList.add(`reveal_active`)	
-		}
+		} else blocks[i].classList.remove(`reveal_active`)
 	}
 }
 
@@ -16,5 +16,5 @@ function visible(el) {
 	const elTop = el.getBoundingClientRect().top;
 	const elBottom = el.getBoundingClientRect().bottom;
 
-	return elTop < viewportHeight || elBottom < viewportHeight ? true : false;
+	return elTop < viewportHeight || elBottom < viewportHeight;
 }
