@@ -30,7 +30,7 @@ for (let i = 0; i < rotatorCaseAlls.length; i++) {
 //}
 	/* я не знаю как вызывать setTimeout бесконечно с переменной скоростью */
 	
-	let intervalId = setTimeout(change, speed);
+	setTimeout(change, speed);
 
 		function change() {
 			let index = rotatorCases.findIndex(item => item.classList.contains(`rotator__case_active`));
@@ -39,7 +39,6 @@ for (let i = 0; i < rotatorCaseAlls.length; i++) {
 			
 			rotatorCases[(index + 1) % rotatorCases.length].style.color = rotatorCases[(index + 1) % rotatorCases.length].getAttribute(`data-color`);
 			speed = rotatorCases[(index + 1) % rotatorCases.length].getAttribute(`data-speed`);
-			//clearInterval(intervalId);
-			//let intervalId1 = setInterval(change, speed);
+			setTimeout(change, speed);
 		}
 	

@@ -1,125 +1,50 @@
+const book = document.getElementById(`book`);
+
 const aSize = document.querySelectorAll(`.font-size`);
 const aSizes = Array.from(aSize);
 
-const book = document.getElementById(`book`);
-
 for (let i = 0; i < aSizes.length; i++) {
-	//aSizes[i].addEventListener(`click`, change);
-	//aSizes[i].addEventListener(`click`, () => false);
-	
-	/* Почему не работает через addEventListener?
-	return false там не срабатывает
-	*/
 
 	aSizes[i].onclick = function() {
-		let index = aSizes.findIndex(item => item.classList.contains(`font-size_active`));
-		aSizes[index].classList.remove(`font-size_active`);
-
-		aSizes[i].classList.add(`font-size_active`);
-		
-		const attr = aSize[i].getAttribute(`data-size`);
-		book.classList.remove(`book_fs-small`);
-		book.classList.remove(`book_fs-big`);
-		if (attr != null) {
-		 	if (attr === `small`) {
-		 	  book.classList.add(`book_fs-small`);
-		 	} else book.classList.add(`book_fs-big`);
-		 }
-
+		change(aSizes, `font-size_active`, `data-size`, [`book_fs-small`, `book_fs-big`], [`small`, `big`], i);
 		return false;
 	}
-
-	/*
-	ниже объединенная функция, которую надо запускать на событии, 
-	но я не знаю как передать туда параметры. Записать ее в переменную и поставить на onclick??
-	И еще раз addEventListener не работает, не срабатывает return false 
-	*/
-
-	function change(arr, classActive, dataAtr, bookClassArray, dataAttrArray) {
-		let indArrray = bookClassArray[0].split(/\_|\-|\//);
-
-		let index = arr.findIndex(item => item.classList.contains(classActive));
-		arr[index].classList.remove(classActive);
-
-		arr[i].classList.add(classActive);
-
-		const attr = arr.getAttribute(dataAtr);
-		for (let i = 0; i < bookClassAr.length; i++) {
-			book.classList.remove(bookClassAr[i]);
-		}
-		if (attr != null) book.classList.add(`book_` + ${indArrray[1]} + `-` + `attr`); 
-
-		return false;
-	}
-	
- 	// function change() {
-		
-	// 	let index = aSizes.findIndex(item => item.classList.contains(`font-size_active`));
-	// 	aSizes[index].classList.remove(`font-size_active`);
-
-	// 	aSizes[i].classList.add(`font-size_active`);
-		
-	// 	const attr = aSize[i].getAttribute(`data-size`);
-	// 	book.classList.remove(`book_fs-small`);
-	// 	book.classList.remove(`book_fs-big`);
-	// 	if (attr != null) {
-	// 	 	if (attr === `small`) {
-	// 	 	  book.classList.add(`book_fs-small`);
-	// 	 	} else book.classList.add(`book_fs-big`);
-	// 	 }
-
-	// 	return false;
- 	// }
 }
 
- 	const textColor = document.querySelector(`.book__control_color`).querySelectorAll(`.color`);
- 	const textColors = Array.from(textColor);
+ const textColor = document.querySelector(`.book__control_color`).querySelectorAll(`.color`);
+ const textColors = Array.from(textColor);
 
- 	for (let i = 0; i < textColors.length; i++) {
+ for (let i = 0; i < textColors.length; i++) {
  		
- 		textColors[i].onclick = function() {
-			let index = textColors.findIndex(item => item.classList.contains(`color_active`));
-			textColors[index].classList.remove(`color_active`);
+ 	textColors[i].onclick = function() {
+ 		change(textColors, `color_active`, `data-text-color`, [`book_color-gray`, `book_color-whitesmoke`,`book_color-black`], [`black`, `gray`, `whitesmoke`], i);
+ 		return false;
+ 	}
+ }
 
-			textColors[i].classList.add(`color_active`);
-			
-			const attr = textColors[i].getAttribute(`data-text-color`);
-			book.classList.remove(`book_color-gray`);
-			book.classList.remove(`book_color-whitesmoke`);
-			book.classList.remove(`book_color-black`);
+ const bgColor = document.querySelector(`.book__control_background`).querySelectorAll(`.color`);
+ const bgColors = Array.from(bgColor);
 
-			if (attr === `black`) {
-			 	book.classList.add(`book_color-black`);
-			 } else if (attr === `gray`) {
-			 	book.classList.add(`book_color-gray`);
-			 } else book.classList.add(`book_color-whitesmoke`); 
+ for (let i = 0; i < bgColors.length; i++) {
+ 		
+ 	bgColors[i].onclick = function() {
+ 		change(bgColors, `color_active`, `data-bg-color`, [`book_bg-gray`, `book_bg-black`, `book_bg-white`], [`black`, `gray`, `white`], i);
+		return false;
+	}
+ }
 
-			return false;
-		}
+function change(arr, classActive, dataAtr, bookClassArray, dataAttrArray, num) {
+	let indArrray = bookClassArray[0].split(/\_|\-|\//);
+	let index = arr.findIndex(item => item.classList.contains(classActive));
+	arr[index].classList.remove(classActive);
+	arr[num].classList.add(classActive);
+
+	const attr = arr[num].getAttribute(dataAtr);
+	for (let j = 0; j < bookClassArray.length; j++) {
+ 		book.classList.remove(bookClassArray[j]);
  	}
 
- 	const bgColor = document.querySelector(`.book__control_background`).querySelectorAll(`.color`);
- 	const bgColors = Array.from(bgColor);
-
- 	for (let i = 0; i < bgColors.length; i++) {
- 		
- 		bgColors[i].onclick = function() {
-			let index = bgColors.findIndex(item => item.classList.contains(`color_active`));
-			bgColors[index].classList.remove(`color_active`);
-
-			bgColors[i].classList.add(`color_active`);
-			
-			const attr = bgColors[i].getAttribute(`data-bg-color`);
-			book.classList.remove(`book_bg-gray`);
-			book.classList.remove(`book_bg-black`);
-			book.classList.remove(`book_bg-white`);
-
-			if (attr === `black`) {
-			 	book.classList.add(`book_bg-black`);
-			 } else if (attr === `gray`) {
-			 	book.classList.add(`book_bg-gray`);
-			 } else book.classList.add(`book_bg-white`); 
-
-			return false;
-		}
+  	if (attr != null) {
+		book.classList.add(`book_${indArrray[1]}-${attr}`);
  	}
+}
