@@ -7,8 +7,12 @@ class Game {
 
     this.wordNow;
     this.reset();
+    
+    this.countTime;
 
     this.registerEvents();
+    this.intervaId;
+      
   }
 
   reset() {
@@ -28,31 +32,28 @@ class Game {
      */
 
     /* 
-    Пыталась получить текущее слово, но this.wordNow выводится верно с консоль
-    а когда присваиваю this.wordNow в переменную, там оказывается случайное слово
-    Почему?
-    
-    console.log(Array.from(this.wordNow));
-    const wordN = Array.from(this.wordNow);
-    let wordWritten = [];
+      Для обратного отсчета времени написала функцию setTime(), ставила ее в setNewWord()
+      для отсчета интервала времени заново. добавила условие проверки счетчика времени перед this.success()
+      и this.fail() (здесь ниже в обработчике события). Но что-то здесь не так, не могу разобраться
+    */
 
-      document.addEventListener(`keydown`, enter);
-      function enter(event) {
-          wordWritten.push(event.key);
+        document.addEventListener(`keydown`, (event) => this.currentSymbol.textContent.toUpperCase() === event.key.toUpperCase() && this.countTime >= 0 ? 
+          this.success()
+         : this.fail());
+  }
+
+  setTime(wordNow) {
+    document.querySelector(`.status__time`).textContent = this.wordNow.length;
+    this.countTime = this.wordNow.length;
+
+    this.intervalId = setInterval(() => {
+      this.countTime -= 1;
+      document.querySelector(`.status__time`).textContent = this.countTime;
+      if (this.countTime === 0) {
+        clearInterval(this.intervalId);
       }
-      wordN === wordWritten ? this.success() : this.fail();
-    */
+    }, 1000);
 
-    /*
-    Как связать сравнение символа со сравнением всего слова?
-    чтобы выводить success или fail 
-    */
-
-    const currentSym = this.currentSymbol.textContent;
-    document.addEventListener(`keydown`, (event) => currentSym === event.key ? this.success() : this.fail());
-    // function enter(event) {
-    //   currentSym === event.key ? game.success() : game.fail();
-    // }
   }
 
   success() {
@@ -70,6 +71,7 @@ class Game {
       this.reset();
     }
     this.setNewWord();
+    
   }
 
   fail() {
@@ -78,6 +80,7 @@ class Game {
       this.reset();
     }
     this.setNewWord();
+    
   }
 
   setNewWord() {
@@ -85,6 +88,7 @@ class Game {
 
     this.renderWord(word);
     this.wordNow = word;
+    this.setTime(this.wordNow);
   }
 
   getWord() {
