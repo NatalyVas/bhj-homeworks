@@ -45,12 +45,12 @@ class Game {
   setTime(wordNow) {
     document.querySelector(`.status__time`).textContent = this.wordNow.length;
     this.countTime = this.wordNow.length;
-
+    clearInterval(this.intervalId);
     this.intervalId = setInterval(() => {
       this.countTime -= 1;
       document.querySelector(`.status__time`).textContent = this.countTime;
-      if (this.countTime === 0) {
-        clearInterval(this.intervalId);
+      if (this.countTime < 0) {
+        this.fail();
       }
     }, 1000);
 
@@ -106,7 +106,6 @@ class Game {
         'javascript'
       ],
       index = Math.floor(Math.random() * words.length);
-      //this.wordNow = words[index];
 
     return words[index];
   }
