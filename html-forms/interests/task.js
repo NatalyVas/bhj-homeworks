@@ -1,52 +1,63 @@
-/*
-брать ближайших детей через children наверное не правильно, а как их взять? 
-(всех детей первой вложенности) 
-Работает у меня только в одну сторону, затрудняюсь сделать в обратную.
-или вообще это все не туда совсем
-*/
-
-const ul = document.querySelector(`ul`);
-for (let li of ul.children) {
-	checkBox(li);
+function findOfChildren(obj) {
+	let children = [];
+	let first = obj.firstElementChild;
+	while (first) {
+		children.push(first);
+		first = first.nextElementSibling;
+	}
+	return children;
 }
 
-function checkBox(li) {
-	let children = li.children;
-	for (let tag of Array.from(children)) {
-		if (tag.tagName === `LABEL`) {
-			tag.querySelector(`.interest__check`).addEventListener(`change`, change);
-			//tag.querySelector(`.interest__check`).addEventListener(`change`, changeParents);
+let ch = findOfChildren(document.querySelector(`ul`));
+findEvent(ch);
 
-			function change() {
-				let input = tag.querySelector(`.interest__check`);
-				let into = Array.from(input.closest(`.interest`).querySelectorAll(`.interest__check`));
-				if (input.checked) {
-					for (let i of into) {
-						i.checked = true;
-					}
-				} else {
-					if (into.findIndex(item => item.checked === false) === -1) {
-						input.checked = true;
-					} else {
-						if (into.findIndex(item => item.checked === true) != -1) {
-							input.indeterminate = true;
+function findParent(obj) {
+	let parent = null;
+	if (obj.closest(`ul`) != null) {
+		if (obj.closest(`ul`).closest(`li`) != null) {
+			parent = obj.closest(`ul`).closest(`li`).querySelector(`.interest__check`);
+		}
+	}
+	return parent;
+}
+
+function findBrothers(obj) {
+	let parent = obj.closest(`ul`);
+	let brothers = findOfChildren(parent);
+	return brothers;
+}
+
+function findEvent(obj) {
+	for (let kid of obj) {
+		if (kid.tagName === `LABEL`) {
+			let checkbox = kid.querySelector(`.interest__check`);
+			checkbox.addEventListener(`change`, () => {
+				let checkboxIn = checkbox.closest(`li`).querySelectorAll(`.interest__check`);
+				for (let into of checkboxIn) {
+					into.checked = checkbox.checked;
+				}
+				let parent = findParent(checkbox);
+				if (parent != null) {
+					let sister = findBrothers(checkbox);
+
+					parent.indeterminate = true;
+
+					let flag = true;
+					for (let i = 0; i < sister.length - 1; i++) {
+						if (sister[i].querySelector(`.interest__check`).checked != sister[i+1].querySelector(`.interest__check`).checked) {
+							flag = false;
 						}
 					}
+					if (flag) {
+						parent.indeterminate = false;
+						parent.checked = sister[0].querySelector(`.interest__check`).checked;
+					}
 				}
-			}
 
-			// function changeParents() {
-			// 	let input = tag.querySelector(`.interest__check`);
-			// 	let parent = input.closest(`.interests_active`).closest(`.interest`).querySelector(`.interest__check`);
-			// 	if (!input.checked && parent.checked) {
-			// 		parent.indeterminate = true;
-			// 	}
-			// }
-
+			});
 		} else {
-			for (let kid of tag.children) {
-				checkBox(kid);
-			}
+			let find = findOfChildren(kid);
+			findEvent(find);
 		}
 	}
 }

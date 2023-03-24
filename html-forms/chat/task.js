@@ -24,6 +24,13 @@ function visible(el) {
 	const elBottom = el.getBoundingClientRect().bottom;
 	return container.getBoundingClientRect().top < elBottom && elBottom < container.getBoundingClientRect().bottom - input.getBoundingClientRect().height;
 }
+
+function scroll() {
+	if (!visible(messages[messages.length - 1])) {
+		messages[messages.length - 1].scrollIntoView(true);
+	}	
+}
+
 let timeoutId;
 let messageNew;
 
@@ -48,16 +55,9 @@ function sendMessage(e) {
 		messageNew = messagesBox.querySelectorAll(`.message`);
 		messages.push(messageNew.item(messageNew.length - 1));
 		messages.push(messageNew.item(messageNew.length - 2));
-		  
+		scroll();
 
-		if (!visible(messages[messages.length - 1])) {
-			/*
-				здесь должна быть прокрутка скрола, наверное типа того (container.scrollTo(0, Y)),
-				но эта не работает, как сделать я не знаю
-			*/
-		}
-
-		 timeoutId = setTimeout(() => {
+		 timeoutId = setInterval(() => {
  			messagesBox.innerHTML +=
 		 	`<div class="message">
             	<div class="message__time">${time.getHours()}:${time.getMinutes()}</div>
@@ -65,6 +65,7 @@ function sendMessage(e) {
          	</div>`;
          	messageNew = messagesBox.querySelectorAll(`.message`);
 			messages.push(messageNew.item(messageNew.length - 1));
+			scroll();
      		}, 30000);
 	}
 }
