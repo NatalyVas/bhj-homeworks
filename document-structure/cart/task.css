@@ -1,6 +1,19 @@
 body {
   font-family: Arial;
 }
+
+.cart {
+  display: none;
+/*  position: fixed;
+  left: 600px;*/
+}
+
+.cart__visible {
+  display: block;
+  position: fixed;
+  left: 600px;
+}
+
 .cart__products {
   display: flex;
   justify-content: center;
@@ -20,7 +33,7 @@ body {
 }
 
 .cart__product-image {
-  border-radius: 6px;
+/*  border-radius: 6px;*/
   margin-right: 10px;
   width: 100px;
   height: 100px;
@@ -79,6 +92,13 @@ body {
   padding: 10px 20px;
   color: #fff;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.product__delete {
+  background: green;
+  padding: 10px 20px;
+  color: #fff;
   cursor: pointer;
 }
 
