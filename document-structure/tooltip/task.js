@@ -26,19 +26,18 @@ for (let a of textA) {
 		let left = coords.left;
 		let top = coords.top;
 
-		 if (atrPosition === `bottom`) {
+		if (atrPosition === `bottom`) {
 		 	top = top + coords.height;
-		 }  else {
-			if (atrPosition === `top`) {
-				top = top - coords.height; 
-			} else {
-				if (atrPosition === `left`) {
-					left = left - coords.width;
-				} else {
-					left = left + coords.width;
-				}
-			}
+		} else 
+		if (atrPosition === `top`) {
+			top = top - coords.height; 
+		} else 
+		if (atrPosition === `left`) {
+			left = left - coords.width;
+		} else {
+			left = left + coords.width;
 		}
+		
 
 		a.querySelector(`.tooltip`).style.left = left + 'px';
 		a.querySelector(`.tooltip`).style.top = top + 'px';

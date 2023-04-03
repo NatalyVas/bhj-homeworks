@@ -2,17 +2,20 @@ const button = document.getElementById(`tasks__add`);
 const taskList = document.getElementById(`tasks__list`);
 let deals = [];
 let storage = window.localStorage;
+//storage.clear();
 
-if (storage.length > 0) {
-	for (let i = 0; i < storage.length; i++) {
-		let get = storage.getItem(i);
-		let div = document.createElement(`div`);
-		div.innerHTML = get;
-		let el = div.firstChild;
-		taskList.appendChild(el);
-		deals.push(el);
+if (storage.hasOwnProperty(`tasks`) && storage.tasks.length != 0) {
+	for (let i = 0; i < storage.tasks.length; i++) {
+		let get = storage.getItem(storage.tasks[i]);
+		let div = JSON.parse(get);
 
-		removeTask(el.querySelector(`.task__remove`));
+		// let div = document.createElement(`div`);
+		// div.innerHTML = get;
+		// let el = div.firstChild;
+		taskList.appendChild(div);
+		deals.push(get);
+
+		removeTask(div.querySelector(`.task__remove`));
 	}
 }
 
@@ -34,8 +37,14 @@ button.onclick = () => {
 		a.innerHTML = `&times;`;
 		deal.appendChild(a);
 
-		deals.push(deal);
-		storage.setItem(deals.length - 1, deal.outerHTML);
+		/*
+			здесь проблема, надо разметку превратить в строку, но JSON.stringify
+			выдает пустой объект. как это надо делать?
+		*/
+
+		deals.push(JSON.stringify(deal));
+
+		storage.setItem(`tasks`, deals);
 
 		removeTask(a);
 
@@ -49,7 +58,7 @@ function removeTask(obj) {
 	obj.addEventListener(`click`, (e) => {
 		let index = deals.indexOf(obj.closest(`.task`));
 		deals.splice(index, 1);
-		storage.removeItem(index);
+		storage.removeItem(tasks.deals[index]);
 		obj.closest(`.task`).remove();
 
 	});
