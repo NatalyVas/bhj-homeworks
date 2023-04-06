@@ -27,13 +27,15 @@ if (storage.hasOwnProperty(`currency`)) {
 
 let xhr = new XMLHttpRequest();
 xhr.open(`GET`, `https://students.netoservices.ru/nestjs-backend/slow-get-courses`, true);
+xhr.responseType = 'json';
 xhr.send();
-xhr.onreadystatechange = function () {
-	if(xhr.readyState === 4) {
+xhr.onload = function () {
+	
 		loader.classList.remove(`loader_active`);
-		let data = JSON.parse(xhr.responseText);
+		//xhr.responseType = 'json';
+		let data = xhr.responseText;
 		exchangeRates(data);
-		};
+		
 	};
 
 function exchangeRates(list) {
