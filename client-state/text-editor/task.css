@@ -8,3 +8,9 @@ textarea {
   border: 1px solid #e2e2e2;
   box-sizing: border-box;
 }
+
+.buttons {
+  width: 400px;
+  margin: 0 auto 0;
+
+}
