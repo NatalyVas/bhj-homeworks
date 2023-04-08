@@ -65,6 +65,7 @@ function showWelcome(obj) {
 }
 
 function clearForm() {
-	document.getElementsByName(`login`)[0].value = ``;
-	document.getElementsByName(`password`)[0].value = ``;
+	//document.getElementsByName(`login`)[0].value = ``;
+	//document.getElementsByName(`password`)[0].value = ``;
+	form.reset();
 }

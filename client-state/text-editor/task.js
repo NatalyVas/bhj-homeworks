@@ -4,9 +4,7 @@ const textarea = document.getElementById(`editor`);
 const save = document.querySelector(`.toStorage`);
 const clear = document.querySelector(`.clear`);
 
-if (storage.text != null) {
-	textarea.textContent = storage.text;
-}
+textarea.textContent = storage.getItem(`text`);
 
 save.addEventListener(`click`, () => {
 	storage.setItem(`text`, textarea.value);
@@ -14,5 +12,5 @@ save.addEventListener(`click`, () => {
 
 clear.addEventListener(`click`, () => {
 	textarea.value = ``;
-	storage.setItem(`text`, textarea.value);
-});
+	storage.removeItem(`text`);
+})
